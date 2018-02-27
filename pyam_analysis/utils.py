@@ -9,6 +9,8 @@ import glob
 import numpy as np
 import pandas as pd
 
+from functools32 import lru_cache
+
 try:
     import ixmp
 except ImportError:
@@ -71,6 +73,7 @@ def write_sheet(writer, name, df, index=False):
         worksheet.set_column(xls_col, width)
 
 
+@lru_cache()
 def read_ix(ix, **kwargs):
     """Read timeseries data from an ix object
 
@@ -91,6 +94,17 @@ def read_ix(ix, **kwargs):
     return df
 
 
+@lru_cache()
+def read_pandas(fname, *args, **kwargs):
+    if not os.path.exists(fname):
+        raise ValueError("no data file '" + fname + "' found!")
+    if fname.endswith('csv'):
+        df = pd.read_csv(fname, *args, **kwargs)
+    else:
+        df = pd.read_excel(fname, *args, **kwargs)
+    return df
+
+
 def read_files(fnames, *args, **kwargs):
     """Read data from a snapshot file saved in the standard IAMC format
     or a table with year/value columns
@@ -102,13 +116,7 @@ def read_files(fnames, *args, **kwargs):
     dfs = []
     for fname in fnames:
         logger().info('Reading {}'.format(fname))
-        if not os.path.exists(fname):
-            raise ValueError("no data file '" + fname + "' found!")
-        # read from database snapshot csv or xlsx
-        if fname.endswith('csv'):
-            df = pd.read_csv(fname, *args, **kwargs)
-        else:
-            df = pd.read_excel(fname, *args, **kwargs)
+        df = read_pandas(fname, *args, **kwargs)
         df.rename(columns={c: str(c).lower()
                            for c in df.columns}, inplace=True)
         dfs.append(df)
