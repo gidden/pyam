@@ -16,6 +16,7 @@ except ImportError:
 from pyam_analysis import plotting
 
 from pyam_analysis.logger import logger
+from pyam_analysis.run_control import run_control
 from pyam_analysis.utils import (
     write_sheet,
     read_ix,
@@ -255,7 +256,7 @@ class IamDataFrame(object):
         for kind, arg in [('color', color), ('marker', marker),
                           ('linestyle', linestyle)]:
             if arg:
-                plotting.run_control().update({kind: {name: {value: arg}}})
+                run_control().update({kind: {name: {value: arg}}})
 
         if criteria == 'uncategorized':
             self.meta[name].fillna(value, inplace=True)
@@ -406,10 +407,16 @@ class IamDataFrame(object):
         """
         df = self.as_pandas(with_metadata=True)
         if map_regions:
-            fname = map_regions if os.path.exists(map_regions) else \
-                _registered_region_mapping(df['model'].unique()[0])
+            if map_regions is True:
+                model = df['model'].unique()[0]
+                fname = run_control()['region_mapping'][model]
+            elif os.path.exists(map_regions):
+                fname = map_regions
+            else:
+                raise ValueError(
+                    'Unknown region mapping: {}'.format(map_regions))
 
-            mapping = read_pandas(region_map)
+            mapping = read_pandas(fname)
             df = (df
                   .merge(mapping, on='region')
                   .rename(columns={map_col: 'region', 'region': 'label'})
@@ -417,10 +424,6 @@ class IamDataFrame(object):
 
         ax = plotting.region_plot(df, **kwargs)
         return ax
-
-
-def _registered_region_mapping(model):
-    pass
 
 
 def _meta_idx(data):
