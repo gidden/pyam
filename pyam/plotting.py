@@ -209,13 +209,13 @@ def region_plot(df, column='value', ax=None, crs=None, gdf=None, add_features=Tr
             )
         cb = plt.colorbar(scalar_map, **cbar)
 
-    if legend:
+    if legend is not False:
         if legend is True:  # use some defaults
             legend = dict(
                 bbox_to_anchor=(1.32, 0.5) if cbar else (1.2, 0.5),
                 loc='right',
             )
-        ax.legend(handles, labels, **legend)
+        _add_legend(ax, handles, labels, legend)
 
     if title:
         var = df['variable'].unique()[0]
