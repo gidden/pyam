@@ -476,7 +476,7 @@ def line_plot(df, x='year', y='value', ax=None, legend=None, title=True,
         default: value
     ax : matplotlib.Axes, optional
     legend : bool or dictionary, optional
-        Add a legend. If a dictionary is provided, it will be used as keyword 
+        Add a legend. If a dictionary is provided, it will be used as keyword
         arguments in creating the legend.
         default: None (displays legend only if less than 13 entries)
     title : bool or string, optional
