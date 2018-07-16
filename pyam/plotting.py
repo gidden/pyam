@@ -502,7 +502,6 @@ def line_plot(df, x='year', y='value', ax=None, legend=None, title=True,
         default: []
     kwargs : Additional arguments to pass to the pd.DataFrame.plot() function
     """
-
     if ax is None:
         fig, ax = plt.subplots()
 
@@ -530,7 +529,6 @@ def line_plot(df, x='year', y='value', ax=None, legend=None, title=True,
             prop_idx[kind] = df.columns.names.index(var)
 
     # plot data, keeping track of which legend labels to apply
-    legend_data = []
     no_label = [rm_legend_label] if isstr(rm_legend_label) else rm_legend_label
 
     all_cols = df.columns
@@ -552,6 +550,7 @@ def line_plot(df, x='year', y='value', ax=None, legend=None, title=True,
         data = df[col]
         pargs = {}
         labels = []
+        # build plotting args and line legend labels
         for key, kind, var in [('c', 'color', color),
                                ('marker', 'marker', marker),
                                ('linestyle', 'linestyle', linestyle)]:
@@ -562,18 +561,17 @@ def line_plot(df, x='year', y='value', ax=None, legend=None, title=True,
                     labels.append(repr(label).lstrip("u'").strip("'"))
             else:
                 pargs[key] = var
-
-        legend_data.append(' '.join(labels))
         kwargs.update(pargs)
         data = data.dropna()
         data.plot(ax=ax, **kwargs)
+        if labels:
+            ax.lines[-1].set_label(' '.join(labels))
 
-    # build legend handles and labels
+    # build unique legend handles and labels
     handles, labels = ax.get_legend_handles_labels()
-    if legend_data != [''] * len(legend_data):
-        labels = sorted(list(set(tuple(legend_data))))
-        idxs = [legend_data.index(d) for d in labels]
-        handles = [handles[i] for i in idxs]
+    handles, labels = np.array(handles), np.array(labels)
+    _, idx = np.unique(labels, return_index=True)
+    handles, labels = handles[idx], labels[idx]
     if legend is not False:
         _add_legend(ax, handles, labels, legend)
 
