@@ -207,7 +207,12 @@ def region_plot(df, column='value', ax=None, crs=None, gdf=None, add_features=Tr
                 fraction=0.022,  # these are magic numbers
                 pad=0.02,       # that just seem to "work"
             )
-        plt.colorbar(scalar_map, ax=ax, **cbar)
+        additional_funcs = []
+        if 'title' in cbar:
+            additional_funcs.append(lambda x: x.set_title(cbar['title']))
+        cbar = plt.colorbar(scalar_map, ax=ax, **cbar)
+        for func in additional_functions:
+            func(cbar)
 
     if legend is not False:
         if legend is True:  # use some defaults
