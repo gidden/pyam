@@ -34,7 +34,7 @@ class Cmd(install):
     def run(self):
         install.run(self)
         dirs = [
-            'pyam.egg-info',
+            'pyam_iamc.egg-info',
             'build',
         ]
         for d in dirs:
@@ -63,6 +63,17 @@ def main():
     cmdclass = {
         'install': Cmd,
     }
+    install_requires = [
+        'argparse',
+        'numpy',
+        'pandas >=0.21.0',
+        'pyyaml',
+        'xlrd',
+        'xlsxwriter',
+        'matplotlib',
+        'seaborn',
+        'six',
+    ]
     setup_kwargs = {
         "name": "pyam-iamc",
         "version": INFO['version'],
@@ -75,6 +86,8 @@ def main():
         "entry_points": entry_points,
         "cmdclass": cmdclass,
         "package_data": package_data,
+        "license": "Apache 2.0",
+        "install_requires": install_requires,
     }
     rtn = setup(**setup_kwargs)
 
