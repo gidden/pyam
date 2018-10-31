@@ -21,8 +21,8 @@ _URL_TEMPLATE = 'https://db1.ene.iiasa.ac.at/{}-api/rest/v2.1/'
 _AUTH_URL = 'https://db1.ene.iiasa.ac.at/EneAuth/config/v1/anonym'
 
 _CITATIONS = {
-    'iamc15': 'Daniel Huppmann, Elmar Kriegler, Volker Krey, Keywan Riahi, '
-    'Joeri Rogelj, Steven K. Rose, John Weyant, et al., '
+    'iamc15': 'D. Huppmann, E. Kriegler, V. Krey, K. Riahi, '
+    'J. Rogelj, S.K. Rose, J. Weyant, et al., '
     'IAMC 1.5°C Scenario Explorer and Data hosted by IIASA. '
     'IIASA & IAMC, 2018. '
     'doi: 10.22022/SR15/08-2018.15429, '
@@ -51,8 +51,8 @@ class Connection(object):
                 name, valid))
 
         logger().info(
-            'You are connected to the {} database. Please cite as:\n\n{}'
-            .format(name, _CITATIONS[name])
+            'You are connected to the {} {}. Please cite as:\n\n{}'
+            .format(name, 'scenario explorer', _CITATIONS[name])
         )
 
         self.base_url = _URL_TEMPLATE.format(name)
