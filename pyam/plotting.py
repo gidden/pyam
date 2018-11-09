@@ -592,7 +592,6 @@ def scatter(df, x, y, ax=None, legend=None, title=None,
                 labels.append(repr(label).lstrip("u'").strip("'"))
             else:
                 pargs[key] = var
-
         if len(labels) > 0:
             legend_data.append(' '.join(labels))
         else:
