@@ -47,6 +47,12 @@ CMDCLASS = versioneer.get_cmdclass()
 CMDCLASS.update({"test": RunTests})
 
 
+def parse_reqs(fname):
+    with open(fname) as f:
+        ret = [l.strip() for l in f.readlines()]
+    return ret
+
+
 def main():
     print(logo)
     classifiers = [
@@ -68,8 +74,8 @@ def main():
     }
     install_requirements = requirements.install_requirements
     extra_requirements = {
-        'tests': ['coverage', 'pytest', 'pytest-cov', 'pytest-mpl'],
-        'docs': ['sphinx', 'sphinx_rtd_theme'],
+        'tests': parse_reqs('./tests/requirements.txt'),
+        'docs': parse_reqs('./doc/requirements.txt'),
         'deploy': ['twine', 'setuptools', 'wheel'],
     }
     setup_kwargs = {

@@ -1,4 +1,4 @@
-sphinx
+sphinx>=1.8
 sphinxcontrib-bibtex
 sphinxcontrib-fulltoc
 sphinxcontrib-programoutput
@@ -10,3 +10,5 @@ nbformat
 ipython
 jupyter
 pillow
+cartopy
+geopandas
