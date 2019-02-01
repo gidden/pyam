@@ -3,5 +3,3 @@ channels:
 - conda-forge
 dependencies:
 - cartopy
-- geopandas
-- sphinx-gallery
