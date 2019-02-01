@@ -1,9 +1,26 @@
-name: pyam
+name: pyam_docs
+channels:
+- conda-forge
 dependencies:
-  - pandas
-  - matplotlib
-  - seaborn
-  - geopandas
-  - cartopy
-  - sphinx>=1.8
-  - sphinx-gallery
+- python=3.6
+- pandas
+- shapely
+- fiona
+- pyproj
+- rtree
+- six
+- geopy
+- matplotlib
+- descartes
+- pysal
+- sphinx
+- sphinx_rtd_theme
+- numpydoc
+- ipython
+- pillow
+- mock
+- cartopy
+- contextily
+- geoplot
+- sphinx-gallery
+- jinja2
