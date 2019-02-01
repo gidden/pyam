@@ -1,6 +1,4 @@
 name: pyam
-channels:
-  - conda-forge
 dependencies:
   - pandas
   - matplotlib
