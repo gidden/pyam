@@ -9,6 +9,7 @@ install_requirements = [
     "matplotlib",
     "seaborn",
     "six",
+    "versioneer",
 ]
 
 
