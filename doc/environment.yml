@@ -17,8 +17,6 @@ dependencies:
   - cartopy
   - sphinx>=1.8
   - sphinxcontrib-bibtex
-  - sphinxcontrib-fulltoc
-  - sphinxcontrib-programoutput
   - sphinx-gallery
   - nbsphinx
   - numpydoc
