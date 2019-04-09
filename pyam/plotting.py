@@ -59,6 +59,15 @@ PYAM_COLORS = {
     'AR6-SSP4-6.0': "#C47900",
     'AR6-SSP5-3.4-OS': "#7F006E",
     'AR6-SSP5-8.5': "#990002",
+    'AR6-RCP2.6': "#003466",
+    'AR6-RCP4.5': "#5492CD",
+    'AR6-RCP6.0': "#C47900",
+    'AR6-RCP8.5': "#990002",
+    # AR5 colours from https://tdaviesbarnard.co.uk/1202/ipcc-official-colors-rcp/
+    'AR5-RCP2.6': "#0000FF",
+    'AR5-RCP4.5': "#79BCFF",
+    'AR5-RCP6.0': "#FF822D",
+    'AR5-RCP8.5': "#FF0000",
 }
 
 
