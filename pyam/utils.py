@@ -284,11 +284,13 @@ def _raise_data_error(msg, data):
     logger.error(msg)
     raise ValueError(msg)
 
-
 def sort_data(data, cols):
     """Sort data rows and order columns by cols"""
     return data.sort_values(cols)[cols + ['value']].reset_index(drop=True)
 
+def _meta_idx(data):
+    """Return the `META_IDX` from `data` by index or columns"""
+    return data[META_IDX].drop_duplicates().set_index(META_IDX).index
 
 def merge_meta(left, right, ignore_meta_conflict=False):
     """Merge two `meta` tables; raise if values are in conflict (optional)
