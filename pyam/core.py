@@ -890,7 +890,8 @@ class IamDataFrame(object):
         self.set_meta(meta, name)
 
     def categorize(
-        self, name, value, criteria, color=None, marker=None, linestyle=None
+        self, name, value, criteria, color=None, marker=None, linestyle=None,
+        apply_criteria = None,
     ):
         """Assign scenarios to a category according to specific criteria
 
@@ -919,7 +920,8 @@ class IamDataFrame(object):
             if arg:
                 run_control().update({kind: {name: {value: arg}}})
         # find all data that matches categorization
-        rows = _apply_criteria(self._data, criteria, in_range=True, return_test="all")
+        func = _apply_criteria if apply_criteria is None else apply_criteria
+        rows = func(self, criteria, in_range=True, return_test="all")
         idx = _make_index(rows, cols=self.index.names)
 
         if len(idx) == 0:
@@ -1006,7 +1008,7 @@ class IamDataFrame(object):
         None
             If all scenarios satisfy the criteria.
         """
-        df = _apply_criteria(self._data, criteria, in_range=False)
+        df = _apply_criteria(self, criteria, in_range=False)
 
         if not df.empty:
             msg = "{} of {} data points do not satisfy the criteria"
@@ -2599,9 +2601,12 @@ def _check_rows(rows, check, in_range=True, return_test="any"):
     return ret
 
 
+
 def _apply_criteria(df, criteria, **kwargs):
     """Apply criteria individually to every model/scenario instance"""
     idxs = []
+    df = df._data
+    
     for var, check in criteria.items():
         _df = df[df.index.get_level_values("variable") == var]
         for group in _df.groupby(META_IDX):
